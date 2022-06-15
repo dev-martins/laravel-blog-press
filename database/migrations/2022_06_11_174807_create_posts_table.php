@@ -24,10 +24,6 @@ return new class extends Migration
                 ->constrained('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('category_id')
-                ->constrained('categories')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->foreignId('visibility_id')
                 ->constrained('visibilities')
                 ->onUpdate('cascade')
