@@ -44,6 +44,11 @@ return [
             'throw' => false,
         ],
 
+        'custom-routes' => [
+            'driver' => 'local',
+            'root' => base_path('routes'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

@@ -43,4 +43,14 @@ class User extends Authenticatable
     // ];
 
     protected $dates = ['email_verified_at'];
+
+    public function allUsers()
+    {
+        return $this->all();
+    }
+
+    public function store($request)
+    {
+        return $this->create($request->input());
+    }
 }

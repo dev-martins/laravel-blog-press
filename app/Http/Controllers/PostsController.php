@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    public function allPosts(){
-        return Post::all();
+    protected $model;
+
+    public function __construct()
+    {
+        $this->model = app(Post::class);
     }
 
-    public function createPost(Request $request)
+    public function allPosts()
     {
-        Post::create($request->input());
+        return $this->model->allPosts();
+    }
+
+    public function store(Request $request)
+    {
+        return $this->model->store($request);
     }
 }

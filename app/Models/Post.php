@@ -11,9 +11,18 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','slug','text','summary','comments','user_id','category_id','visibility_id'];
+    protected $fillable = ['title', 'slug', 'text', 'summary', 'comments', 'user_id', 'category_id', 'visibility_id'];
     protected $collection = 'posts';
     // protected $primaryKey = 'id';
     protected $connection = 'mongodb';
 
+    public function allPosts()
+    {
+        return $this->all();
+    }
+
+    public function store($request)
+    {
+        return $this->create($request->input());
+    }
 }
