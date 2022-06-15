@@ -1,0 +1,60 @@
+version: "3.5"
+services:
+  api-mongo-db-with-laravel:
+    container_name: api-mongo-db-with-laravel
+    build:
+      context: "."
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 89:80
+    restart: unless-stopped
+    tty: true
+    dns:
+      - 8.8.8.8
+    environment:
+      QUEUE_CONNECTION: database
+      DB_PORT: 27017
+      DB_USERNAME: root
+      DB_HOST: mongo-db
+      DB_PASSWORD: password
+      DB_CONNECTION: mongodb
+      DB_DATABASE: mongo-db
+    networks:
+      - prime-network
+  mongo-db:
+    container_name: blog-mongo-db
+    image: mongo:latest
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=password
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - prime-network
+  # mongo-express:
+  #   image: mongo-express
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_BASICAUTH_USERNAME: martins
+  #     ME_CONFIG_BASICAUTH_PASSWORD: martins!
+  #     ME_CONFIG_MONGODB_PORT: 27017
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: password
+  #   links:
+  #     - mongo-db
+  #   networks:
+  #     - prime-network
+  redis:
+    image: redis
+    command: redis-server --requirepass 1234
+    environment:
+    - ALLOW_EMPTY_PASSWORD=yes
+    - REDIS_PASSWORD=1234
+    networks:
+    - prime-network
+networks:
+  prime-network:
+    driver: bridge
